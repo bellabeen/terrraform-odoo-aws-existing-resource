@@ -1,3 +1,7 @@
+module "vpc" {
+  source = "../vpc"
+}
+
 # Create EFS Data
 resource "aws_efs_file_system" "efs_data" {
   encrypted           = true

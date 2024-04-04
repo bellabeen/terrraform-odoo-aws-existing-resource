@@ -15,12 +15,6 @@ provider "aws" {
 # Use Module VPC
 module "vpc" {
   source = "./modules/vpc"
-
-  # Pass variables to the vpc module
-  # subnet_public_cidr      = var.subnet_public_cidr
-  # subnet_private_ec2_cidr = var.subnet_private_ec2_cidr
-  # subnet_private_db_cidr  = var.subnet_private_db_cidr
-  # availability_zone       = var.availability_zone
 }
 
 # Use Module Security Group
@@ -94,7 +88,18 @@ module "sg" {
   }
 }
 
+# # Use Module RDS Aurora
+# module "rds_cluster" {
+#   source = "./modules/rds_cluster"
+#   vpc_id = module.vpc.vpc_id
+#   db_security_group_id = module.sg.db_security_group_id
+#   subnet_db_ids = module.vpc.private_db_subnet_ids
+#   db_master_username = "postgres"
+#   db_master_password = "postgres"
+# }
+
 # # Use Module Certificate Manager
+# # TODO: if use ACM uncomment this code
 # module "acm_certificate" {
 #   source = "./modules/acm_certificate"
 #   # You can provide necessary variables here
@@ -119,23 +124,6 @@ module "sg" {
 #   alb_arn = module.alb.alb_arn
 # }
 
-# Use Module RDS Aurora
-# module "rds_cluster" {
-#   source = "./modules/rds_cluster"
-#   vpc_id = module.vpc.vpc_id
-#   db_security_group_id = module.sg.db_security_group_id
-#   subnet_db_ids = module.vpc.private_db_subnet_ids
-#   db_master_username = "postgres"
-#   db_master_password = "postgres"
-# }
-
-# Use Module Route53
-# TODO: if use route53 uncomment this code
-# module "route53" {
-#   source = "./modules/route53"
-#   # You can provide necessary variables here
-# }
-
 # # Use Module Auto Scalling Group
 # module "asg" {
 #   source = "./modules/ec2/asg"
@@ -150,15 +138,22 @@ module "sg" {
 #   ami_app_id = "ami-08e4b984abde34a4f"
 # }
 
-# # Use Module Data Life Cycle Manager
-# module "dlm" {
-#   source = "./modules/ec2/dlm"
-# }
+# Use Module EFS
+module "efs" {
+  source = "./modules/efs"
+  vpc_id = module.vpc.vpc_id
+  subnet_app_ids = module.vpc.private_ec2_subnet_ids
+  efs_security_group_id = module.sg.efs_security_group_id
+}
 
-# # Use Module EFS
-# module "efs" {
-#   source = "./modules/efs"
-#   vpc_id = module.vpc.vpc_id
-#   subnet_app_ids = module.vpc.private_ec2_subnet_ids
-#   efs_security_group_id = module.sg.efs_security_group_id
+# Use Module Data Life Cycle Manager
+module "dlm" {
+  source = "./modules/ec2/dlm"
+}
+
+# # Use Module Route53
+# # TODO: if use route53 uncomment this code
+# module "route53" {
+#   source = "./modules/route53"
+#   # You can provide necessary variables here
 # }
