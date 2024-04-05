@@ -1,6 +1,6 @@
 # Define the existing VPC data source
 data "aws_vpc" "existing_vpc" {
-  id = "vpc-0bb1d2b66560ffcf4"
+  id = "vpc-0a3c8b69f1be0259d"
 }
 
 # Retrieve existing subnets in the VPC
