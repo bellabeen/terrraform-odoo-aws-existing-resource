@@ -11,12 +11,6 @@ data "aws_subnets" "existing_subnet" {
   }
 }
 
-# # Retrieve details of existing subnets
-# data "aws_subnet" "existing_subnet_ids" {
-#   for_each = toset(data.aws_subnets.existing_subnet.ids)
-#   id       = each.value
-# }
-
 # Get source ID Public Subnet
 data "aws_subnets" "existing_public_subnet" {
   filter {
@@ -34,7 +28,6 @@ data "aws_subnet" "public_subnet" {
   for_each = toset(data.aws_subnets.existing_public_subnet.ids)
   id       = each.value
 }
-
 
 # Get source ID Private APP Subnet
 data "aws_subnets" "existing_private_ec2_subnet" {
@@ -71,4 +64,3 @@ data "aws_subnet" "private_db_subnet" {
   for_each = toset(data.aws_subnets.existing_private_db_subnet.ids)
   id       = each.value
 }
-
