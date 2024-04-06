@@ -20,6 +20,7 @@ module "vpc" {
 # Use Module Security Group
 module "sg" {
   source = "./modules/ec2/sg"
+  subnet_ids  = module.vpc.private_ec2_subnet_blocks
 
   # Inherit another module
   vpc_id                  = module.vpc.vpc_id
@@ -63,28 +64,28 @@ module "sg" {
   ssl_vpn_from_db_port   = 5432
   ssl_vpn_to_db_port     = 5432
 
-  sg_db_name        = "SG-DB-EXAMPLE"
-  sg_db_description = "Security group for DB EXAMPLE"
+  sg_db_name        = "SG-DB-EXAMPLE-2"
+  sg_db_description = "Security group for DB EXAMPLE-2"
   sg_db_tags = {
-    "Name" = "SG-DB-EXAMPLE"
+    "Name" = "SG-DB-EXAMPLE-2"
   }
 
-  sg_alb_name        = "SG-ALB-EXAMPLE"
-  sg_alb_description = "Security group for ALB EXAMPLE"
+  sg_alb_name        = "SG-ALB-EXAMPLE-2"
+  sg_alb_description = "Security group for ALB EXAMPLE-2"
   sg_alb_tags = {
-    "Name" = "SG-ALB-EXAMPLE"
+    "Name" = "SG-ALB-EXAMPLE-2"
   }
 
-  sg_app_name        = "SG-APP-EXAMPLE"
-  sg_app_description = "Security group for APP EXAMPLE"
+  sg_app_name        = "SG-APP-EXAMPLE-2"
+  sg_app_description = "Security group for APP EXAMPLE-2"
   sg_app_tags = {
-    "Name" = "SG-APP-EXAMPLE"
+    "Name" = "SG-APP-EXAMPLE-2"
   }
 
-  sg_efs_name        = "SG-EFS-EXAMPLE"
-  sg_efs_description = "Security group for EFS EXAMPLE"
+  sg_efs_name        = "SG-EFS-EXAMPLE-2"
+  sg_efs_description = "Security group for EFS EXAMPLE-2"
   sg_efs_tags = {
-    "Name" = "SG-EFS-EXAMPLE"
+    "Name" = "SG-EFS-EXAMPLE-2"
   }
 }
 

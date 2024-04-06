@@ -22,3 +22,7 @@ output "db_security_group_id" {
   description = "The ID of the created DB security group."
   value       = aws_security_group.db_security_group.id
 }
+# output "private_ec2_subnet_blocks" {
+#   description = "Private Subnet EC2 CIDR Blocks"
+#   value = aws_subnet.subnet_private_ec2[*].cidr_block
+# }
